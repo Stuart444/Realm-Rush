@@ -24,6 +24,8 @@ public class CubeEditor : MonoBehaviour {
 
         // Gets the first TextMesh it comes across in child objects
         textMesh = GetComponentInChildren<TextMesh>();
-        textMesh.text = snapPos.x / gridSize + "," + snapPos.z / gridSize;
+        string labelText = snapPos.x / gridSize + "," + snapPos.z / gridSize;
+        textMesh.text = labelText;
+        gameObject.name = labelText; // names the GameObject in the Hierarchy
     }
 }
