@@ -4,27 +4,36 @@ using UnityEngine;
 
 [ExecuteInEditMode]
 [SelectionBase]
+[RequireComponent(typeof(Waypoint))]
 public class CubeEditor : MonoBehaviour {
 
-    [SerializeField] [Range(1f,20f)] float gridSize = 10f;
+    Waypoint waypoint;
 
-    TextMesh textMesh;
+    private void Awake()
+    {
+        waypoint = GetComponent<Waypoint>();
+    }
 
     void Update ()
     {
-        Snapping();
+        SnapToGrid();
+        UpdateLabel();
     }
 
-    private void Snapping()
+    private void SnapToGrid()
     {
-        Vector3 snapPos;
-        snapPos.x = Mathf.RoundToInt(transform.position.x / gridSize) * gridSize;
-        snapPos.z = Mathf.RoundToInt(transform.position.z / gridSize) * gridSize;
-        transform.position = new Vector3(snapPos.x, 0f, snapPos.z);
+        int gridSize = waypoint.GetGridSize();
+        transform.position = new Vector3(waypoint.GetGridPos().x, 0f, waypoint.GetGridPos().y);
+    }
+
+    private void UpdateLabel()
+    {
+        int gridSize = waypoint.GetGridSize();
 
         // Gets the first TextMesh it comes across in child objects
-        textMesh = GetComponentInChildren<TextMesh>();
-        string labelText = snapPos.x / gridSize + "," + snapPos.z / gridSize;
+        TextMesh textMesh = GetComponentInChildren<TextMesh>();
+        string labelText = waypoint.GetGridPos().x / gridSize + "," 
+            + waypoint.GetGridPos().y / gridSize;
         textMesh.text = labelText;
         gameObject.name = labelText; // names the GameObject in the Hierarchy
     }
