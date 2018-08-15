@@ -19,11 +19,22 @@ public class Pathfinder : MonoBehaviour {
 
     public List<Waypoint> GetPath()
     {
+        // If there is no path, it calculates the path
+        // and stores (Caches) it. If there is a path,
+        // it returns the already available path.
+        if (path.Count == 0)
+        {
+            CalculatePath();
+        }
+        return path;
+    }
+
+    private void CalculatePath()
+    {
         LoadBlocks();
         ColourStartAndEnd();
         BreadthFirstSearch();
         CreatePath();
-        return path;
     }
 
     private void CreatePath()
