@@ -32,7 +32,6 @@ public class Pathfinder : MonoBehaviour {
     private void CalculatePath()
     {
         LoadBlocks();
-        ColourStartAndEnd();
         BreadthFirstSearch();
         CreatePath();
     }
@@ -97,16 +96,9 @@ public class Pathfinder : MonoBehaviour {
         }
         else
         {
-            neighbour.SetTopColour(Color.yellow);
             queue.Enqueue(neighbour);
             neighbour.exploredFrom = searchCenter;
         }
-    }
-
-    private void ColourStartAndEnd()
-    {
-        startWayPoint.SetTopColour(Color.green);
-        endWayPoint.SetTopColour(Color.red);
     }
 
     private void LoadBlocks()
