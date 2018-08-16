@@ -15,7 +15,7 @@ public class EnemyDamage : MonoBehaviour {
     private void OnParticleCollision(GameObject other)
     {
         ProcessHit();
-        print("I'm Hit");
+        //print("I'm Hit");
         
         if(hitPoints <= 0)
         {
@@ -31,6 +31,6 @@ public class EnemyDamage : MonoBehaviour {
     void ProcessHit()
     {
         hitPoints--;
-        print("Current HP: " + hitPoints);
+        //print("Current HP: " + hitPoints);
     }
 }

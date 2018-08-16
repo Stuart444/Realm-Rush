@@ -5,7 +5,8 @@ using UnityEngine;
 public class Waypoint : MonoBehaviour {
 
     // OK to be public as this is a data class
-    public bool isExplored;
+    public bool isExplored = false;
+    public bool isPlaceable = true;
     public Waypoint exploredFrom;
 
     Vector2Int gridPos;
@@ -32,6 +33,18 @@ public class Waypoint : MonoBehaviour {
 
     private void OnMouseOver()
     {
-        print(gameObject.name);
+        if (Input.GetMouseButtonDown(0))
+        {
+            print(gameObject.name + " Clicked");
+
+            if (isPlaceable)
+            {
+                print("Placing Tower");
+            }
+            else
+            {
+                print("Unable to place Tower");
+            }
+        }
     }
 }
