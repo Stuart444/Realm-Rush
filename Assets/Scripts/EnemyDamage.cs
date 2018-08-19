@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour {
 
     [SerializeField] int hitPoints = 10;
     [SerializeField] ParticleSystem hitParticlePrefab;
     [SerializeField] ParticleSystem deathParticlePrefab;
+    [SerializeField] AudioClip enemyHitSFX;
+    [SerializeField] AudioClip enemydeathSFX;
+
+    AudioSource myAudioSource;
 
 	// Use this for initialization
 	void Start () {
+
+        myAudioSource = GetComponent<AudioSource>();
 		
 	}
 
@@ -28,20 +31,18 @@ public class EnemyDamage : MonoBehaviour {
     {
         hitPoints--;
         hitParticlePrefab.Play();
+        myAudioSource.PlayOneShot(enemyHitSFX);
     }
 
     private void KillEnemy()
     {
         var vfx = Instantiate(deathParticlePrefab, transform.position, Quaternion.identity);
         vfx.Play();
-        Destroy(gameObject);
+        float destroyDelay = vfx.main.duration;
 
-        if (deathParticlePrefab)
-        {
-            if (!deathParticlePrefab.IsAlive())
-            {
-                Destroy(vfx.gameObject);
-            }
-        }
+        Destroy(vfx.gameObject, destroyDelay);
+        AudioSource.PlayClipAtPoint(enemydeathSFX, Camera.main.transform.position);
+
+        Destroy(gameObject);
     }
 }
